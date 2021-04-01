@@ -1,5 +1,5 @@
-const Decentragram = artifacts.require("Decentragram");
+const DSM = artifacts.require("DSM");
 
-module.exports = function(deployer) {
-  // Code goes here...
+module.exports = async function(deployer) {
+  await deployer.deploy(DSM);
 };
