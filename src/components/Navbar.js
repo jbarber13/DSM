@@ -16,7 +16,7 @@ class Navbar extends Component {
           <img src={photo} width="30" height="30" className="d-inline-block align-top" alt="" />
           &nbsp;Decentralized Social Media (DSM)
         </a>
-        
+
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <a
@@ -25,21 +25,20 @@ class Navbar extends Component {
               target="_blank"
               rel="noopener noreferrer"
             >
-               Your Account: {this.props.account}
+              Your Account: {this.props.account}
+              { /**Identicon - only show if account exists*/
+                this.props.account
+                  ? <img
+                    className="ml-2"
+                    width="30"
+                    height="30"
+                    src={`data:image/png;base64, ${new Identicon(this.props.account, 30).toString()}`}
+                    alt=""
+                  />
+                  : <span></span>
+              }
             </a>
           </li>
-
-          { /**Identicon - only show if account exists*/
-            this.props.account
-            ? <img
-              className="ml-2"
-              width="30"
-              height="30"
-              src={`data:image/png;base64, ${new Identicon(this.props.account, 30).toString()}`}
-              alt=""
-              />
-              :<span></span>
-          }
         </ul>
       </nav>
     );
