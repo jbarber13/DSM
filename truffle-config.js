@@ -1,4 +1,4 @@
-//deploy with: truffle migrate --kovan
+//deploy with: truffle migrate --network kovan
 //show deployments: truffle networks
 
 //MUST BE IN PROJECT ROOT DIRECTORY WHEN RUNNING seed-exchange.js
@@ -14,6 +14,17 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*" // Match any network id
+    },
+    rinkeby: {
+      provider: function() {
+        return new HDWalletProvider(
+          privateKeys.split(','), // Array of account private keys
+          `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`// Url to an Ethereum Node
+        )
+      },
+      gas: 5000000,
+      gasPrice: 25000000000,
+      network_id: 4 //kovan
     },
     kovan: {
       provider: function() {

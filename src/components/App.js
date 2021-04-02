@@ -14,18 +14,26 @@ class App extends Component {
   //run before render function
   async componentWillMount() {
     await this.loadWeb3()
-    await this.loadBlockchainData()
+    if(this.state.web3Loaded){
+      await this.loadBlockchainData()
+    }else{
+      //this.setState({loading: false})
+    }
+    
   }
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
       await window.ethereum.enable()
+      this.setState({web3Loaded: true})
     }
     else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
+      this.setState({web3Loaded: true})
     }
     else {
-      window.alert('Please install MetaMask in order to contribute to DSM')
+      window.alert('Please install MetaMask in order to access to DSM')
+      window.location.href = "https://metamask.io/"
     }
   }
 
@@ -61,7 +69,7 @@ class App extends Component {
 
       this.setState({ loading: false })
     } else {
-      window.alert('DSM contract not deployed to the detected network')
+      window.alert('DSM contract not deployed to the detected network, please switch your network in MetaMask to Rinkeby and refresh the page')
     }
 
 
@@ -116,6 +124,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      web3Loaded: false,
       account: '',
       dsm: null,
       images: [],
@@ -128,10 +137,12 @@ class App extends Component {
 
   render() {
     return (
-       <div className="bg-dark">
+       <div className="bg-dark mt-5">
         <Navbar account={this.state.account} />
         { this.state.loading
-          ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
+          ? <div id="loader" style={{height: "55.5rem"}}>
+              <h2 className="text-center mt-5 text-light">Loading...</h2>
+            </div>
           : <Main
               images={this.state.images}
               captureFile={this.captureFile}
