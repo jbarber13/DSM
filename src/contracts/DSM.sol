@@ -15,6 +15,7 @@ contract DSM {
     string description;
     uint tipAmount;
     address payable author;
+    uint256 timeStamp;
   }
 
   event ImageCreated(
@@ -22,7 +23,8 @@ contract DSM {
     string hash, 
     string description, 
     uint tipAmount, 
-    address payable author
+    address payable author,
+    uint256 timeStamp
   );
 
   event ImageTipped(
@@ -48,10 +50,10 @@ contract DSM {
     imageCount++;
 
     //add image hash to contract
-    images[imageCount] = Image(imageCount, _hash, _desc, 0, msg.sender);
+    images[imageCount] = Image(imageCount, _hash, _desc, 0, msg.sender, now);
 
     //emit event
-    emit ImageCreated(imageCount, _hash, _desc, 0, msg.sender);
+    emit ImageCreated(imageCount, _hash, _desc, 0, msg.sender, now);
   }
 
   //tip posts
@@ -74,5 +76,6 @@ contract DSM {
 
     //emit event
     emit ImageTipped(_id, _image.hash, _image.description, _image.tipAmount, _author);
+
   }
 }

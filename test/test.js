@@ -47,6 +47,7 @@ contract('DSM', ([deployer, author, tipper]) => {
           assert.equal(event.description, desc, 'description is correct')
           assert.equal(event.tipAmount, '0', 'tip amount is correct')
           assert.equal(event.author, author, 'author is correct')
+          event.timeStamp.toString().length.should.be.at.least(1, 'timestamp is present')
         })
         it('lists image hashes', async () => {
           const image = await dsm.images(imageCount)

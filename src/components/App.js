@@ -56,7 +56,7 @@ class App extends Component {
 
       //sort by most tipped first
       this.setState({
-        images: this.state.images.sort((a,b) => b.tipAmount - a.tipAmount)
+        images: this.state.images.sort((a, b) => b.tipAmount - a.tipAmount)
       })
 
       this.setState({ loading: false })
@@ -105,13 +105,11 @@ class App extends Component {
 
   }
 
-  tipImage = (id, tipamount) => {
-    this.setState({ loading: true })
-    this.state.dsm.methods.tipImageOwner(id).send({ from: this.state.account })
-      .on('transactionHash', (hash) => {
-        this.setState({ loading: false })
-        console.log("Tip Image transaction hash: ", hash)
-      })
+  tipImage(id, tipAmount) {
+    
+    this.state.dsm.methods.tipImageOwner(id).send({ from: this.state.account, value: tipAmount }).on('transactionHash', (hash) => {
+      console.log("tipImageOwner completed", hash)
+    })
   }
 
 
@@ -120,26 +118,27 @@ class App extends Component {
     this.state = {
       account: '',
       dsm: null,
-      imageCount: 0,
       images: [],
       loading: true
     }
+    this.uploadImage = this.uploadImage.bind(this)
+    this.tipImage = this.tipImage.bind(this)
+    this.captureFile = this.captureFile.bind(this)
   }
 
   render() {
     return (
-      <div>
+       <div className="bg-dark">
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <Main
-            images={this.state.images}
-            captureFile={this.captureFile}
-            uploadImage={this.uploadImage}
-            tipImage={this.tipImage}
-          />
+              images={this.state.images}
+              captureFile={this.captureFile}
+              uploadImage={this.uploadImage}
+              tipImage={this.tipImage}
+            />
         }
-
       </div>
     );
   }

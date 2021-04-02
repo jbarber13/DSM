@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
+import moment from 'moment'
 
 class Main extends Component {
+
+
+  
 
   render() {
 
     return (
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-5 bg-dark">
         <div className="row">
-          <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '500px' }}>
-            <div className="content mr-auto ml-auto">
+          <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '50%' }}>
+            <div className="content mr-auto ml-auto text-light">
               <p>&nbsp;</p>
               <h2>Share Image</h2>
               <form onSubmit={(event) => {
@@ -25,7 +29,7 @@ class Main extends Component {
                       type="text"
                       ref={(input) => {this.imageDescription = input}}
                       className="form-control"
-                      placeHolder="Description..."
+                      placeholder="Description..."
                       required
                     />
                     <button type="submit" className="btn btn-primary btn-block btn-lg">Upload</button>
@@ -45,11 +49,13 @@ class Main extends Component {
                         src={`data:image/png;base64,${new Identicon(image.author, 30).toString()}`}
                       />
                       <small className="text-muted">{image.author}</small>
+                      <small className="text-muted"><br />Posted on: {moment.unix(image.timeStamp).format('M/D/Y')} at: {moment.unix(image.timeStamp).format('h:mm:ss a')}</small> 
+                      
                     </div>
                     <ul id="imageList" className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <p className="text-center"><img src={`https://ipfs.infura.io/ipfs/${image.hash}`} style={{ maxWidth: '420px'}}/></p>
-                        <p>{image.description}</p>
+                        <p className="text-center"><img src={`https://ipfs.infura.io/ipfs/${image.hash}`} style={{ maxWidth: '95%'}}/></p>
+                        <p className="text-dark">{image.description}</p>
                       </li>
                       <li key={key} className="list-group-item py-2">
                         <small className="float-left mt-1 text-muted">
