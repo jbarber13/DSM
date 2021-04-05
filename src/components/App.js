@@ -137,7 +137,7 @@ class App extends Component {
 
   render() {
     return (
-       <div className="bg-dark mt-5">
+       <div>
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" style={{height: "55.5rem"}}>
